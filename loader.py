@@ -16,7 +16,7 @@ load_dotenv()
 # logger = logging.getLogger(__name__)
 bot = Bot(os.getenv("TOKEN"))
 
-webhook_uri = 'https://filebot-3zbu.onrender.com' + '/' + str(os.getenv('TOKEN'))
+webhook_uri = 'https://filebot-snif.onrender.com' + '/' + str(os.getenv('TOKEN'))
 dp = Dispatcher(bot=bot, storage=MemoryStorage())
 dp.include_routers(start.router)
 
