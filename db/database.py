@@ -1,10 +1,14 @@
+import os
 from datetime import datetime
 
+from dotenv import load_dotenv
 from sqlalchemy import func
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine, AsyncSession
 from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 
-engine = create_async_engine(url='sqlite+aiosqlite:///db.sqlite3')
+load_dotenv()
+
+engine = create_async_engine(url=os.getenv("PG"))
 async_session = async_sessionmaker(engine, class_=AsyncSession)
 
 
