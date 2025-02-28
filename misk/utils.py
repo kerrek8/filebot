@@ -29,28 +29,27 @@ def get_content_info(message: Message):
     return {'content_type': content_type, 'file_id': file_id, 'content_text': content_text}
 
 
-async def send_message_user(m: Message, user_id, content_type, content_text=None, file_id=None, kb=None):
+async def send_message_user(m: Message, content_type, content_text=None, file_id=None, kb=None):
     match content_type:
         case 'text':
-            await m.answer(chat_id=user_id, text=content_text, reply_markup=kb)
+            await m.answer( text=content_text, reply_markup=kb)
         case 'photo':
-            await m.answer_photo(chat_id=user_id, photo=file_id, caption=content_text, reply_markup=kb)
+            await m.answer_photo( photo=file_id, caption=content_text, reply_markup=kb)
         case 'document':
-            await m.answer_document(chat_id=user_id, document=file_id, caption=content_text, reply_markup=kb)
+            await m.answer_document( document=file_id, caption=content_text, reply_markup=kb)
         case 'video':
-            await m.answer_video(chat_id=user_id, video=file_id, caption=content_text, reply_markup=kb)
+            await m.answer_video( video=file_id, caption=content_text, reply_markup=kb)
         case 'audio':
-            await m.answer_audio(chat_id=user_id, audio=file_id, caption=content_text, reply_markup=kb)
+            await m.answer_audio( audio=file_id, caption=content_text, reply_markup=kb)
         case 'voice':
-            await m.answer_voice(chat_id=user_id, voice=file_id, caption=content_text, reply_markup=kb)
+            await m.answer_voice( voice=file_id, caption=content_text, reply_markup=kb)
 
 
-async def send_many_notes(all_notes, m: Message, user_id):
+async def send_many_notes(all_notes, m: Message, ):
     for note in all_notes:
         try:
             await send_message_user(m=m, content_type=note['content_type'],
                                     content_text=note['content_text'],
-                                    user_id=user_id,
                                     file_id=note['file_id'],
                                     kb=rule_note_kb(note['id']))
         except Exception as E:

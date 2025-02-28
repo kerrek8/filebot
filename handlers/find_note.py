@@ -2,11 +2,10 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message, CallbackQuery
-from pyexpat.errors import messages
 
 from db.dao import get_notes_by_user
 from keyboards.others import main_note_kb, find_note_kb, generate_date_keyboard, generate_type_content_keyboard
-# from loader import bot
+
 from misk.utils import send_many_notes
 
 router = Router()
@@ -29,7 +28,7 @@ async def all_views_noti(message: Message, state: FSMContext):
     all_notes = await get_notes_by_user(user_id=message.from_user.id)
     kb = await main_note_kb()
     if all_notes:
-        await send_many_notes(all_notes, message, message.from_user.id)
+        await send_many_notes(all_notes, message)
         await message.answer(f'Все ваши {len(all_notes)} заметок отправлены!', reply_markup=kb)
     else:
         await message.answer('У вас пока нет ни одной заметки!', reply_markup=kb)
@@ -55,7 +54,7 @@ async def find_note_to_date(call: CallbackQuery, state: FSMContext):
     await state.clear()
     date_add = call.data.replace('date_note_', '')
     all_notes = await get_notes_by_user(user_id=call.from_user.id, date_add=date_add)
-    await send_many_notes(all_notes, call.message, call.from_user.id)
+    await send_many_notes(all_notes, call.message)
     kb = await main_note_kb()
     await call.message.answer(f'Все ваши {len(all_notes)} заметок на {date_add} отправлены!',
                               reply_markup=kb)
@@ -80,7 +79,7 @@ async def find_note_to_content_type(call: CallbackQuery, state: FSMContext):
     await state.clear()
     content_type = call.data.replace('content_type_note_', '')
     all_notes = await get_notes_by_user(user_id=call.from_user.id, content_type=content_type)
-    await send_many_notes(all_notes, call.message, call.from_user.id)
+    await send_many_notes(all_notes, call.message)
     kb = await main_note_kb()
     await call.message.answer(f'Все ваши {len(all_notes)} с типом контента {content_type} отправлены!',
                               reply_markup=kb)
@@ -106,7 +105,7 @@ async def text_noti_process(message: Message, state: FSMContext):
     await state.clear()
     kb = await main_note_kb()
     if all_notes:
-        await send_many_notes(all_notes, message, message.from_user.id)
+        await send_many_notes(all_notes, message)
         await message.answer(f'C поисковой фразой {text_search} было обнаружено {len(all_notes)} заметок!',
                              reply_markup=kb)
     else:

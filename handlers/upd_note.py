@@ -2,6 +2,7 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message, CallbackQuery
+
 from db.dao import delete_note_by_id, update_text_note
 from keyboards.others import main_note_kb
 
