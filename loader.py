@@ -9,7 +9,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 from db.base import create_tables
 from misk.commands import set_bot_commands
-from handlers import start
+from handlers import start, add_note, find_note, upd_note
 
 load_dotenv()
 
@@ -17,7 +17,7 @@ bot = Bot(os.getenv("TOKEN"))
 
 webhook_uri = 'https://filebot-snif.onrender.com' + '/' + str(os.getenv('TOKEN'))
 dp = Dispatcher(bot=bot, storage=MemoryStorage())
-dp.include_routers(start.router)
+dp.include_routers(start.router, add_note.router, find_note.router, upd_note.router)
 
 
 async def start():
