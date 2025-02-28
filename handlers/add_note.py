@@ -4,7 +4,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.types import Message
 from db.dao import add_note
 from keyboards.others import main_note_kb, stop_fsm, add_note_check
-from loader import bot
+# from loader import bot
 from misk.utils import get_content_info, send_message_user
 
 router = Router()
@@ -44,9 +44,10 @@ async def handle_user_note_message(message: Message, state: FSMContext):
                 f"Подпись: {content_info['content_text'] if content_info['content_text'] else 'Отсутствует'}\n"
                 f"File ID: {content_info['file_id'] if content_info['file_id'] else 'Нет файла'}\n\n"
                 f"Все ли верно?")
-        await send_message_user(bot=bot, content_type=content_info['content_type'], content_text=text,
+        await send_message_user(m=message, content_type=content_info['content_type'], content_text=text,
                                 user_id=message.from_user.id, file_id=content_info['file_id'],
                                 kb=add_note_check())
+
         await state.set_state(AddNoteStates.check_state)
     else:
         await message.answer(
