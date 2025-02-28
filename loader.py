@@ -6,14 +6,13 @@ from aiogram.types import Update
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from aiogram.fsm.storage.memory import MemoryStorage
-# import logging
+
 from db.base import create_tables
 from misk.commands import set_bot_commands
 from handlers import start
 
 load_dotenv()
-# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-# logger = logging.getLogger(__name__)
+
 bot = Bot(os.getenv("TOKEN"))
 
 webhook_uri = 'https://filebot-snif.onrender.com' + '/' + str(os.getenv('TOKEN'))

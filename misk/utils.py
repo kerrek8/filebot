@@ -1,3 +1,5 @@
+import asyncio
+from keyboards.others import rule_note_kb
 from aiogram.types import Message
 
 
@@ -41,3 +43,18 @@ async def send_message_user(bot, user_id, content_type, content_text=None, file_
             await bot.send_audio(chat_id=user_id, audio=file_id, caption=content_text, reply_markup=kb)
         case 'voice':
             await bot.send_voice(chat_id=user_id, voice=file_id, caption=content_text, reply_markup=kb)
+
+
+async def send_many_notes(all_notes, bot, user_id):
+    for note in all_notes:
+        try:
+            await send_message_user(bot=bot, content_type=note['content_type'],
+                                    content_text=note['content_text'],
+                                    user_id=user_id,
+                                    file_id=note['file_id'],
+                                    kb=rule_note_kb(note['id']))
+        except Exception as E:
+            print(f'Error: {E}')
+            await asyncio.sleep(2)
+        finally:
+            await asyncio.sleep(0.5)
