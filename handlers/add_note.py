@@ -38,19 +38,17 @@ async def start_add_note(message: Message, state: FSMContext):
 async def handle_user_note_message(message: Message, state: FSMContext):
 
     content_info = get_content_info(message)
-    print(content_info.get('content_type'))
     if content_info.get('content_type'):
-        print('я в ифе')
         await state.update_data(content_info)
-        print('after state')
         text = (f"Получена заметка:\n"
                 f"Тип: {content_info['content_type']}\n"
                 f"Подпись: {content_info['content_text'] if content_info['content_text'] else 'Отсутствует'}\n"
                 f"File ID: {content_info['file_id'] if content_info['file_id'] else 'Нет файла'}\n\n"
                 f"Все ли верно?")
+        kb = await add_note_check()
         await send_message_user(m=message, content_type=content_info['content_type'], content_text=text,
                                 file_id=content_info['file_id'],
-                                kb=add_note_check())
+                                kb=kb)
 
         await state.set_state(AddNoteStates.check_state)
     else:
