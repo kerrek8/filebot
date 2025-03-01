@@ -36,7 +36,9 @@ async def start_add_note(message: Message, state: FSMContext):
 
 @router.message(AddNoteStates.content)
 async def handle_user_note_message(message: Message, state: FSMContext):
+
     content_info = get_content_info(message)
+    print(content_info)
     if content_info.get('content_type'):
         await state.update_data(**content_info)
 
