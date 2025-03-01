@@ -40,7 +40,7 @@ async def rule_note_kb(note_id: int):
 
 
 async def generate_date_keyboard(notes):
-    unique_dates = {note['date_created'].strftime('%Y-%m-%d') for note in notes}
+    unique_dates = [note['date_created'].strftime('%Y-%m-%d') for note in notes]
     texts = []
     callbacks_d = []
     for d in unique_dates:
@@ -53,7 +53,7 @@ async def generate_date_keyboard(notes):
 
 
 async def generate_type_content_keyboard(notes):
-    unique_content = {note['content_type'] for note in notes}
+    unique_content = [note['content_type'] for note in notes]
     texts = []
     callbacks_d = []
     for d in unique_content:

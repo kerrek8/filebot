@@ -45,13 +45,15 @@ async def send_message_user(m: Message, content_type, content_text=None, file_id
             await m.answer_voice( voice=file_id, caption=content_text, reply_markup=kb)
 
 
-async def send_many_notes(all_notes, m: Message, ):
+async def send_many_notes(all_notes, m: Message):
+
     for note in all_notes:
         try:
+            kb = await rule_note_kb(note['id'])
             await send_message_user(m=m, content_type=note['content_type'],
                                     content_text=note['content_text'],
                                     file_id=note['file_id'],
-                                    kb=rule_note_kb(note['id']))
+                                    kb=kb)
         except Exception as E:
             print(f'Error: {E}')
             await asyncio.sleep(2)
