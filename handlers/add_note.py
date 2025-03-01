@@ -38,10 +38,11 @@ async def start_add_note(message: Message, state: FSMContext):
 async def handle_user_note_message(message: Message, state: FSMContext):
 
     content_info = get_content_info(message)
-    print(content_info)
+    print(content_info.get('content_type'))
     if content_info.get('content_type'):
-        await state.update_data(**content_info)
-
+        print('я в ифе')
+        await state.update_data(content_info)
+        print('after state')
         text = (f"Получена заметка:\n"
                 f"Тип: {content_info['content_type']}\n"
                 f"Подпись: {content_info['content_text'] if content_info['content_text'] else 'Отсутствует'}\n"
