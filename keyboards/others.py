@@ -63,3 +63,4 @@ async def generate_type_content_keyboard(notes):
     callbacks_d.append("main_menu")
     kb = await inline_builder(text=texts, callback_data=callbacks_d)
     return kb
+
